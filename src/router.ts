@@ -26,10 +26,10 @@ router.post("/orders", (req, res) => {
     res.send("Ok");
 });
 
-router.patch("/orders", (req, res) => {
+router.patch("/orders/:orderId", (req, res) => {
     res.send("Ok");
 });
 
-router.delete("/orders", (req, res) => {
+router.delete("/orders/:orderId", (req, res) => {
     res.send("Ok");
 });
