@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import { router } from "./router";
 
@@ -13,7 +13,16 @@ mongoose
         });
         app.use(express.json());
         app.use(router);
+        app.use(
+            (
+                error: Error,
+                _request: Request,
+                response: Response,
+                next: NextFunction
+            ) => {
+                console.log(error);
+                return error ? response.sendStatus(500) : next();
+            }
+        );
     })
     .catch(() => console.log("Failed to connect to mongo"));
-
-

@@ -12,10 +12,10 @@ class CategoryController {
         if (!name || !icon) {
             return res.status(400).json({ error: "Invalid post payload." });
         }
-        // const nameTaken = await CategoryRepositoryInstance.findByName(name);
-        // if (nameTaken) {
-        //     return res.status(404).json({ error: "This name already exists." });
-        // }
+        const nameTaken = await CategoryRepositoryInstance.findByName(name);
+        if (nameTaken) {
+            return res.status(404).json({ error: "This name already exists." });
+        }
 
         const storedCategories = await CategoryRepositoryInstance.create({
             name,

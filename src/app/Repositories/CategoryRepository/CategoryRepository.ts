@@ -2,7 +2,11 @@ import { Category, ICategory } from "../../Models/Category";
 
 class CategoryRepository {
     async findAll() {
-        return await Category.find().sort({ name: "asc" });
+        return await Category.find({}, "name icon").sort({ name: "asc" });
+    }
+
+    async findByName(name: string) {
+        return await Category.find({ name}, "name");
     }
 
     // async delete() {
