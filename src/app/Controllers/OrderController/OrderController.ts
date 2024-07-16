@@ -8,15 +8,15 @@ class OrderController {
     }
 
     async show(req: Request, res: Response) {
-        const { id } = req.params;
+        const { orderId } = req.params;
 
-        if (!id) {
+        if (!orderId) {
             return res.status(404).json({
                 error: "Invalid payload",
             });
         }
 
-        const order = await OrderRepositoryInstance.findById(id);
+        const order = await OrderRepositoryInstance.findById(orderId);
         if (!order) {
             return res.status(404).json({
                 error: "Order not found",
@@ -38,15 +38,18 @@ class OrderController {
     }
 
     async update(req: Request, res: Response) {
-        const { table, status, createdAt, products } = req.body;
+        const { orderId } = req.params;
+        if (!orderId) {
+            return res.status(500).json({ error: "Invalid payload" });
+        }
 
-        const mockID = "1";
-        const orderExists = await OrderRepositoryInstance.findById(mockID);
+        const orderExists = await OrderRepositoryInstance.findById(orderId);
         if (!orderExists) {
             return res.status(404).json({ error: "Order not found" });
         }
 
-        const order = await OrderRepositoryInstance.update(mockID, {
+        const { table, status, createdAt, products } = req.body;
+        const order = await OrderRepositoryInstance.update(orderId, {
             table,
             status,
             createdAt,
