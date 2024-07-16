@@ -7,6 +7,25 @@ class CategoryController {
         res.json(categories);
     }
 
+    async show(req: Request, res: Response) {
+        const { categoryId } = req.params;
+
+        if (!categoryId) {
+            return res.status(404).json({
+                error: "Invalid payload",
+            });
+        }
+
+        const category = await CategoryRepositoryInstance.findById(categoryId);
+        if (!category) {
+            return res.status(404).json({
+                error: "Category not found",
+            });
+        }
+
+        return res.json(category);
+    }
+
     async store(req: Request, res: Response) {
         const { name, icon } = req.body;
         if (!name || !icon) {
@@ -24,41 +43,37 @@ class CategoryController {
         return res.json(storedCategories);
     }
 
-    // async update(req: Request, res: Response) {
-    //     const { id } = req.params;
-    //     const { name } = req.body;
+    async update(req: Request, res: Response) {
+        const { categoryId } = req.params;
+        const { name, icon } = req.body;
 
-    //     const categoriesExists = await CategoryRepository.findById(id);
-    //     if (!categoriesExists) {
-    //         return res.status(404).json({ error: "Category not found" });
-    //     }
+        if (!categoryId || !name || !icon) {
+            return res.status(404).json({
+                error: "Invalid payload",
+            });
+        }
 
-    //     const categoryByName = await CategoryRepository.findByName(name);
-    //     if (categoryByName && categoryByName.id !== id) {
-    //         return res.status(404).json({ error: "This name already exists." });
-    //     }
+        const categoriesExists = await CategoryRepositoryInstance.findById(
+            categoryId
+        );
+        if (!categoriesExists) {
+            return res.status(404).json({ error: "Category not found" });
+        }
 
-    //     const category = await CategoryRepository.update(id, {
-    //         name,
-    //     });
+        // const categoryByName = await CategoryRepositoryInstance.findByName(
+        //     name
+        // );
+        // if (categoryByName && categoryByName.id !== id) {
+        //     return res.status(404).json({ error: "This name already exists." });
+        // }
 
-    //     res.status(200).json(category);
-    // }
+        const category = await CategoryRepositoryInstance.update(categoryId, {
+            name,
+            icon,
+        });
 
-    // async delete(req: Request, res: Response) {
-    //     const { id } = req.params;
-
-    //     const category = await CategoryRepository.findById(id);
-
-    //     if (!category) {
-    //         return res.status(404).json({
-    //             error: "Category not found",
-    //         });
-    //     }
-
-    //     await CategoryRepository.delete(id);
-    //     return res.sendStatus(204);
-    // }
+        res.status(200).json(category);
+    }
 }
 
 // Singleton

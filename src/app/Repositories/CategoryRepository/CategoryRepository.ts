@@ -6,16 +6,26 @@ class CategoryRepository {
     }
 
     async findByName(name: string) {
-        return await Category.find({ name}, "name");
+        return await Category.find({ name }, "name");
     }
 
-    // async delete() {
-    //     const deleteOp = await Category.deleteOne({ $where: { name: name } });
-    //     return deleteOp;
-    // }
+    async findById(id: string) {
+        return await Category.find({ $where: id });
+    }
 
     async create({ name, icon }: ICategory) {
         const category = await Category.create({ name, icon });
+        return category;
+    }
+
+    async update(id: string, { name, icon }: ICategory) {
+        const category = await Category.findByIdAndUpdate(
+            { id },
+            {
+                name,
+                icon,
+            }
+        );
         return category;
     }
 }
