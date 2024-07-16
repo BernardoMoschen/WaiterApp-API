@@ -18,6 +18,19 @@ class OrderRepository {
         });
         return order;
     }
+
+    async update(id: string, { table, status, createdAt, products }: IOrder) {
+        const order = await Order.findByIdAndUpdate(
+            { id },
+            {
+                table,
+                status,
+                createdAt,
+                products,
+            }
+        );
+        return order;
+    }
 }
 
 export const OrderRepositoryInstance = new OrderRepository();
