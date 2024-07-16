@@ -9,6 +9,10 @@ class ProductsRepository {
         return await Product.find({ name });
     }
 
+    async findById(id: string) {
+        return await Product.find({ $where: id });
+    }
+
     async create({
         name,
         description,
@@ -25,6 +29,17 @@ class ProductsRepository {
             ingredients,
             category,
         });
+        return product;
+    }
+
+    async update(
+        id: string,
+        { name, description, imagePath, price, ingredients, category }: IProduct
+    ) {
+        const product = await Product.findByIdAndUpdate(
+            { id },
+            { name, description, imagePath, price, ingredients, category }
+        );
         return product;
     }
 }
