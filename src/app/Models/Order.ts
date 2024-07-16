@@ -1,6 +1,6 @@
 import { model, Schema } from "mongoose";
 
-interface IOrder {
+export interface IOrder {
     table: string;
     status: "WAITING" | "IN_PRODUCTION" | "DONE";
     createdAt: Date;
