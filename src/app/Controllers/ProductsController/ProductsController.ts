@@ -7,22 +7,20 @@ class ProductsController {
         res.json(products);
     }
 
-    // async store(req: Request, res: Response) {
-    //     const { name, icon } = req.body;
-    //     if (!name || !icon) {
-    //         return res.status(400).json({ error: "Invalid post payload." });
-    //     }
-    //     const nameTaken = await ProductsRepositoryInstance.findByName(name);
-    //     if (nameTaken) {
-    //         return res.status(404).json({ error: "This name already exists." });
-    //     }
+    async store(req: Request, res: Response) {
+        const { name, description, imagePath, price, ingredients, category } =
+            req.body;
 
-    // const storedCategories = await ProductsRepositoryInstance.create({
-    //     name,
-    //     icon,
-    // });
-    // return res.json(storedCategories);
-    // }
+        const product = await ProductsRepositoryInstance.create({
+            name,
+            description,
+            imagePath,
+            price,
+            ingredients,
+            category,
+        });
+        res.json(product);
+    }
 }
 
 // Singleton

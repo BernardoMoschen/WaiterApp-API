@@ -1,8 +1,8 @@
 import { model, Schema } from "mongoose";
 
 export interface IProduct {
-    description: string;
     name: string;
+    description: string;
     imagePath: string;
     price: number;
     ingredients: {

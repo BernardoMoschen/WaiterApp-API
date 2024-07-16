@@ -14,7 +14,7 @@ router.post("/categories", CategoryControllerInstance.store);
 // });
 
 router.get("/products", ProductsControllerInstance.index);
-// router.post("/categories", ProductsControllerInstance.store);
+router.post("/products", ProductsControllerInstance.store);
 
 
 
