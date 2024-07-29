@@ -11,7 +11,7 @@ class OrderController {
         const { orderId } = req.params;
 
         if (!orderId) {
-            return res.status(404).json({
+            return res.status(500).json({
                 error: "Invalid payload",
             });
         }

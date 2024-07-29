@@ -44,9 +44,9 @@ router.patch("/products/:productId", ProductsControllerInstance.update);
 // ------------------------------------
 
 // Orders
-router.get("/orders", OrderControllerInstance.index);
-router.get("/orders/:orderId", OrderControllerInstance.show);
-router.post("/orders", OrderControllerInstance.store);
+router.get("/order", OrderControllerInstance.index);
+router.get("/order/:orderId", OrderControllerInstance.show);
+router.post("/order", OrderControllerInstance.store);
 // router.delete("/orders/:orderId", (req, res) => {
 //     res.send("Ok");
 // });
