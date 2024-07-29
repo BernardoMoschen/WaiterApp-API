@@ -18,6 +18,7 @@ const upload = multer({
     }),
 });
 
+// Categories
 router.get("/categories", CategoryControllerInstance.index);
 router.get("/categories/:categoryId", CategoryControllerInstance.show);
 router.get(
@@ -28,6 +29,9 @@ router.post("/categories", CategoryControllerInstance.store);
 router.patch("/categories/:categoryId", CategoryControllerInstance.update);
 router.delete("/categories/:categoryId", CategoryControllerInstance.delete);
 
+// ------------------------------------
+
+// Products
 router.get("/products", ProductsControllerInstance.index);
 router.get("/products/:productId", ProductsControllerInstance.show);
 router.post(
@@ -37,10 +41,12 @@ router.post(
 );
 router.patch("/products/:productId", ProductsControllerInstance.update);
 
+// ------------------------------------
+
+// Orders
 router.get("/orders", OrderControllerInstance.index);
 router.get("/orders/:orderId", OrderControllerInstance.show);
 router.post("/orders", OrderControllerInstance.store);
-router.patch("/orders/:orderId", OrderControllerInstance.update);
 // router.delete("/orders/:orderId", (req, res) => {
 //     res.send("Ok");
 // });

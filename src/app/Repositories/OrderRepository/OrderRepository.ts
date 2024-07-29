@@ -9,23 +9,21 @@ class OrderRepository {
         return await Order.find({ $where: id });
     }
 
-    async create({ table, status, createdAt, products }: IOrder) {
+    async create({ table, status, products }: Omit<IOrder, "createdAt">) {
         const order = await Order.create({
             table,
             status,
-            createdAt,
             products,
         });
         return order;
     }
 
-    async update(id: string, { table, status, createdAt, products }: IOrder) {
+    async update(id: string, { table, status, products }: IOrder) {
         const order = await Order.findByIdAndUpdate(
             { id },
             {
                 table,
                 status,
-                createdAt,
                 products,
             }
         );

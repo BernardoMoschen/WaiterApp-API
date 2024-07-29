@@ -27,36 +27,13 @@ class OrderController {
     }
 
     async store(req: Request, res: Response) {
-        const { table, status, createdAt, products } = req.body;
+        const { table, status, products } = req.body;
         const order = await OrderRepositoryInstance.create({
             table,
             status,
-            createdAt,
             products,
         });
         res.json(order);
-    }
-
-    async update(req: Request, res: Response) {
-        const { orderId } = req.params;
-        if (!orderId) {
-            return res.status(500).json({ error: "Invalid payload" });
-        }
-
-        const orderExists = await OrderRepositoryInstance.findById(orderId);
-        if (!orderExists) {
-            return res.status(404).json({ error: "Order not found" });
-        }
-
-        const { table, status, createdAt, products } = req.body;
-        const order = await OrderRepositoryInstance.update(orderId, {
-            table,
-            status,
-            createdAt,
-            products,
-        });
-
-        return res.status(200).json(order);
     }
 }
 
