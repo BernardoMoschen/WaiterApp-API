@@ -2,11 +2,13 @@ import { IOrder, Order } from "../../Models/Order";
 
 class OrderRepository {
     async findAll() {
-        return await Order.find({}).sort({ createdAt: "desc" });
+        return await Order.find({})
+            .sort({ createdAt: "desc" })
+            .populate("products.product");
     }
 
     async findById(id: string) {
-        return await Order.find({ $where: id });
+        return await Order.find({ $where: id }).populate("products.product");
     }
 
     async create({ table, status, products }: Omit<IOrder, "createdAt">) {
