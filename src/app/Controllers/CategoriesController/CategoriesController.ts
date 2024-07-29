@@ -77,6 +77,15 @@ class CategoryController {
             await CategoryRepositoryInstance.findCategoryProducts(categoryId);
         return res.json(categoryProducts);
     }
+
+    async delete(req: Request, res: Response) {
+        const { categoryId } = req.params;
+        if (!categoryId) {
+            return res.status(400).json({ error: "Invalid payload." });
+        }
+        const deleteOp = await CategoryRepositoryInstance.delete(categoryId);
+        return res.status(202).json(deleteOp);
+    }
 }
 
 // Singleton

@@ -26,6 +26,7 @@ router.get(
 );
 router.post("/categories", CategoryControllerInstance.store);
 router.patch("/categories/:categoryId", CategoryControllerInstance.update);
+router.delete("/categories/:categoryId", CategoryControllerInstance.delete);
 
 router.get("/products", ProductsControllerInstance.index);
 router.get("/products/:productId", ProductsControllerInstance.show);

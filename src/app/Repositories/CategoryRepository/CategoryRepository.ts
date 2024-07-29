@@ -33,6 +33,11 @@ class CategoryRepository {
         });
         return category;
     }
+
+    async delete(id: string) {
+        const category = await Category.findOneAndDelete().where({ _id: id });
+        return category;
+    }
 }
 
 export const CategoryRepositoryInstance = new CategoryRepository();
