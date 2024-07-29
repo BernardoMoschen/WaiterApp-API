@@ -20,8 +20,12 @@ const upload = multer({
 
 router.get("/categories", CategoryControllerInstance.index);
 router.get("/categories/:categoryId", CategoryControllerInstance.show);
+router.get(
+    "/categories/products/:categoryId",
+    CategoryControllerInstance.listProductsByCategory
+);
 router.post("/categories", CategoryControllerInstance.store);
-router.patch("/categories/:categoryId", CategoryControllerInstance.store);
+router.patch("/categories/:categoryId", CategoryControllerInstance.update);
 
 router.get("/products", ProductsControllerInstance.index);
 router.get("/products/:productId", ProductsControllerInstance.show);

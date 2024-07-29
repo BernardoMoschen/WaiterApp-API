@@ -1,4 +1,5 @@
 import { Category, ICategory } from "../../Models/Category";
+import { Product } from "../../Models/Product";
 
 class CategoryRepository {
     async findAll() {
@@ -10,7 +11,14 @@ class CategoryRepository {
     }
 
     async findById(id: string) {
-        return await Category.find({ $where: id });
+        return await Category.findOne().where({ _id: id });
+    }
+
+    async findCategoryProducts(id: string) {
+        const categoryProducts = await Product.find()
+            .where({ category: id })
+            .populate("category");
+        return categoryProducts;
     }
 
     async create({ name, icon }: ICategory) {
@@ -19,13 +27,10 @@ class CategoryRepository {
     }
 
     async update(id: string, { name, icon }: ICategory) {
-        const category = await Category.findByIdAndUpdate(
-            { id },
-            {
-                name,
-                icon,
-            }
-        );
+        const category = await Category.findByIdAndUpdate(id, {
+            name,
+            icon,
+        });
         return category;
     }
 }

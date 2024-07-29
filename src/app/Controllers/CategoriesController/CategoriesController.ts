@@ -67,6 +67,16 @@ class CategoryController {
 
         return res.status(200).json(category);
     }
+
+    async listProductsByCategory(req: Request, res: Response) {
+        const { categoryId } = req.params;
+        if (!categoryId) {
+            return res.status(400).json({ error: "Invalid payload." });
+        }
+        const categoryProducts =
+            await CategoryRepositoryInstance.findCategoryProducts(categoryId);
+        return res.json(categoryProducts);
+    }
 }
 
 // Singleton
