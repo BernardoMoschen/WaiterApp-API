@@ -30,14 +30,7 @@ class ProductsController {
         const imagePath = req.file?.filename;
         const { name, description, price, ingredients, category } = req.body;
 
-        if (
-            !name ||
-            !description ||
-            !price ||
-            !ingredients ||
-            !category ||
-            !imagePath
-        ) {
+        if (!name || !description || !price || !category || !imagePath) {
             return res.status(500).json({ error: "Invalid payload" });
         }
 
@@ -51,7 +44,7 @@ class ProductsController {
             description,
             imagePath,
             price: Number.parseFloat(price),
-            ingredients: JSON.parse(ingredients),
+            ingredients: ingredients ? JSON.parse(ingredients) : [],
             category,
         });
         return res.status(201).json(product);
