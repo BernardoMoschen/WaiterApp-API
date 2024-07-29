@@ -27,18 +27,34 @@ class ProductsController {
     }
 
     async store(req: Request, res: Response) {
-        const { name, description, imagePath, price, ingredients, category } =
-            req.body;
+        const imagePath = req.file?.filename;
+        const { name, description, price, ingredients, category } = req.body;
+
+        if (
+            !name ||
+            !description ||
+            !price ||
+            !ingredients ||
+            !category ||
+            !imagePath
+        ) {
+            return res.status(500).json({ error: "Invalid payload" });
+        }
+
+        const productExists = await ProductsRepositoryInstance.findByName(name);
+        if (productExists) {
+            return res.status(500).json({ error: "Product already exists" });
+        }
 
         const product = await ProductsRepositoryInstance.create({
             name,
             description,
             imagePath,
-            price,
-            ingredients,
+            price: Number.parseFloat(price),
+            ingredients: JSON.parse(ingredients),
             category,
         });
-        res.json(product);
+        return res.status(201).json(product);
     }
 
     async update(req: Request, res: Response) {

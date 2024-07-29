@@ -2,8 +2,21 @@ import { Router } from "express";
 import { CategoryControllerInstance } from "./app/Controllers/CategoriesController/CategoriesController";
 import { ProductsControllerInstance } from "./app/Controllers/ProductsController/ProductsController";
 import { OrderControllerInstance } from "./app/Controllers/OrderController/OrderController";
+import multer from "multer";
+import path from "node:path";
 
 export const router = Router();
+
+const upload = multer({
+    storage: multer.diskStorage({
+        destination: (_req, _file, callback) => {
+            callback(null, path.resolve(__dirname, "..", "uploads"));
+        },
+        filename: (_req, file, callback) => {
+            callback(null, `${Date.now()}-${file.originalname}`);
+        },
+    }),
+});
 
 router.get("/categories", CategoryControllerInstance.index);
 router.get("/categories/:categoryId", CategoryControllerInstance.show);
@@ -12,7 +25,11 @@ router.patch("/categories/:categoryId", CategoryControllerInstance.store);
 
 router.get("/products", ProductsControllerInstance.index);
 router.get("/products/:productId", ProductsControllerInstance.show);
-router.post("/products", ProductsControllerInstance.store);
+router.post(
+    "/products",
+    upload.single("image"),
+    ProductsControllerInstance.store
+);
 router.patch("/products/:productId", ProductsControllerInstance.update);
 
 router.get("/orders", OrderControllerInstance.index);

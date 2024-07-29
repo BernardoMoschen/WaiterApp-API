@@ -6,7 +6,7 @@ class CategoryRepository {
     }
 
     async findByName(name: string) {
-        return await Category.find({ name }, "name");
+        return await Category.findOne({ name }, "name");
     }
 
     async findById(id: string) {

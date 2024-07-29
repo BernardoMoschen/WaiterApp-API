@@ -6,11 +6,11 @@ class ProductsRepository {
     }
 
     async findByName(name: string) {
-        return await Product.find({ name });
+        return await Product.findOne({ name });
     }
 
     async findById(id: string) {
-        return await Product.find({ $where: id });
+        return await Product.findOne({ $where: id });
     }
 
     async create({

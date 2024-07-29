@@ -1,3 +1,4 @@
+import path from "node:path";
 import express, { NextFunction, Request, Response } from "express";
 import mongoose from "mongoose";
 import { router } from "./router";
@@ -8,9 +9,11 @@ mongoose
         console.log("🗄 - Connected to mongo");
         const app = express();
         const port = 3001;
-        app.listen(port, () => {
-            console.log(`🚀 - Server is running on http://localhost:${port}`);
-        });
+
+        app.use(
+            "/uploads",
+            express.static(path.resolve(__dirname, "..", "uploads"))
+        );
         app.use(express.json());
         app.use(router);
         app.use(
@@ -24,5 +27,8 @@ mongoose
                 return error ? response.sendStatus(500) : next();
             }
         );
+        app.listen(port, () => {
+            console.log(`🚀 - Server is running on http://localhost:${port}`);
+        });
     })
     .catch(() => console.log("Failed to connect to mongo"));
