@@ -20,15 +20,10 @@ class OrderRepository {
         return order;
     }
 
-    async update(id: string, { table, status, products }: IOrder) {
-        const order = await Order.findByIdAndUpdate(
-            { id },
-            {
-                table,
-                status,
-                products,
-            }
-        );
+    async update(id: string, { status }: Pick<IOrder, "status">) {
+        const order = await Order.findByIdAndUpdate(id, {
+            status,
+        });
         return order;
     }
 }

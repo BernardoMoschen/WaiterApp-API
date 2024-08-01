@@ -35,6 +35,26 @@ class OrderController {
         });
         res.json(order);
     }
+
+    async update(req: Request, res: Response) {
+        const { orderId } = req.params;
+        if (!orderId) {
+            return res.status(500).json({
+                error: "Invalid payload",
+            });
+        }
+
+        const { status } = req.body;
+        if (!["WAITING", "IN_PRODUCTION", "DONE"].includes(status)) {
+            return res.status(500).json({
+                error: "Invalid payload",
+            });
+        }
+        const order = await OrderRepositoryInstance.update(orderId, {
+            status,
+        });
+        return res.json(order);
+    }
 }
 
 // Singleton
