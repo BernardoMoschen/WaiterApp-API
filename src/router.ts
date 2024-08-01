@@ -49,9 +49,7 @@ router.get("/order/:orderId", OrderControllerInstance.show);
 router.post("/order", OrderControllerInstance.store);
 router.patch("/order/:orderId", OrderControllerInstance.update);
 router.delete("/order/:orderId", OrderControllerInstance.delete);
-// router.delete("/orders/:orderId", (req, res) => {
-//     res.send("Ok");
-// });
+
 
 
 
