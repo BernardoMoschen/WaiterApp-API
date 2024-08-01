@@ -55,6 +55,18 @@ class OrderController {
         });
         return res.json(order);
     }
+
+    async delete(req: Request, res: Response) {
+        const { orderId } = req.params;
+        if (!orderId) {
+            return res.status(500).json({
+                error: "Invalid payload",
+            });
+        }
+
+        const deleteOp = await OrderRepositoryInstance.delete(orderId);
+        return res.status(202).json(deleteOp);
+    }
 }
 
 // Singleton

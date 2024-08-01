@@ -26,6 +26,11 @@ class OrderRepository {
         });
         return order;
     }
+
+    async delete(id: string) {
+        const order = await Order.findByIdAndDelete(id);
+        return order;
+    }
 }
 
 export const OrderRepositoryInstance = new OrderRepository();
